@@ -22,14 +22,27 @@ historial de cada estudiante. Consume el backend de microservicios (.NET) a trav
 2. Infra en Docker: Postgres y RabbitMQ arriba.
 3. Node 20+.
 
-El Gateway debe estar accesible (por defecto `http://localhost:5287` con `dotnet run`,
-o `http://localhost:8080` con `docker compose --profile services`).
+El backend es **.NET** (no Spring Boot). El Gateway debe estar accesible:
+`http://localhost:8080` con docker compose (modo demo, default) u `http://localhost:5287`
+con `dotnet run` local.
 
-## Cómo ejecutar
+## Levantar el backend (modo demo, docker compose)
+
+Desde el repo del backend (`campus-connect`):
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.local.yml --profile services up -d --build
+```
+
+Esto levanta Postgres + RabbitMQ + los 6 microservicios + Gateway (8080). Para el Portal
+Docente alcanza con que estén arriba **identity**, **academic** (para matricular y poblar la
+réplica), **attendance** y **gateway**, pero el compose los trae a todos.
+
+## Cómo ejecutar el frontend
 
 ```bash
 npm install
-cp .env.example .env   # ajustá VITE_GATEWAY_URL si tu Gateway usa otro puerto
+cp .env.example .env   # default 8080 (docker); poné 5287 si corrés el backend con dotnet run
 npm run dev
 ```
 
