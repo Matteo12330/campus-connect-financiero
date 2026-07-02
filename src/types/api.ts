@@ -58,3 +58,62 @@ export interface ReportIncidentResponse {
   incidentId: string
   severity: string
 }
+
+// ── Academic (Portal Secretaría / Académico) ──
+
+export interface StudentListItemDto {
+  studentId: string
+  fullName: string
+  grade: string
+  academicStatus: string
+  financialStatus: string
+}
+
+export interface StudentDetailDto {
+  studentId: string
+  fullName: string
+  documentId: string
+  grade: string
+  schoolId: string
+  academicStatus: string
+  financialStatus: string
+  guardian: GuardianDto
+}
+
+export interface GuardianDto {
+  name: string
+  email: string
+}
+
+export interface EnrollStudentRequest {
+  fullName: string
+  documentId: string
+  grade: string
+  schoolId?: string
+  guardianName: string
+  guardianEmail: string
+}
+
+export interface EnrollStudentResponse {
+  studentId: string
+  enrollmentId: string
+  status: string
+}
+
+export interface StudentStatusDto {
+  studentId: string
+  exists: boolean
+  academicStatus: string
+  financialStatus: string
+}
+
+export interface StudentEventDto {
+  eventType: string
+  occurredAt: string
+  correlationId: string
+}
+
+export interface PagedList<T> {
+  items: T[]
+  total: number
+}

@@ -23,7 +23,7 @@ export function RoleGuard({ allow, children }: RoleGuardProps) {
         <EmptyState
           icon="ti-lock"
           title="No tienes acceso a este portal"
-          message={`Este portal es para el rol Docente. Tu sesión es ${user.role}.`}
+          message={`Tu sesión tiene el rol ${user.role}, que no tiene acceso a este portal.`}
         />
       </div>
     )
