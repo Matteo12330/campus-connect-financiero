@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
   {
     path: '/academico',
     element: (
-      <RoleGuard allow={['Secretaria', 'Direccion']}>
+      <RoleGuard allow={['Secretaria', 'Direccion']} loginPath="/academico/login">
         <AcademicoShell />
       </RoleGuard>
     ),

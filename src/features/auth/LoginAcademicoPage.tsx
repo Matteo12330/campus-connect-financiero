@@ -5,9 +5,6 @@ import { z } from 'zod'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useAuth } from '@/shared/auth/useAuth'
-import { Button } from '@/shared/ui/Button'
-import { Field } from '@/shared/ui/Field'
-import { controlClass } from '@/shared/ui/styles'
 import { ApiError } from '@/shared/api/httpClient'
 
 const schema = z.object({
@@ -48,85 +45,192 @@ export function LoginAcademicoPage() {
   }
 
   return (
-    <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
-      {/* Panel de marca */}
-      <div className="relative hidden flex-col justify-between overflow-hidden bg-[linear-gradient(135deg,#7a1b2e_0%,#5e1422_55%,#4e0f1c_100%)] p-12 text-white lg:flex">
-        <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/12">
-            <i className="ti ti-school text-2xl text-oro-soft" aria-hidden="true" />
-          </span>
-          <span className="font-display text-xl">CampusConnect 360</span>
-        </div>
-        <div>
-          <div className="mb-4 h-1 w-16 rounded-full bg-oro" />
-          <h2 className="font-display text-4xl leading-tight">
-            Portal Secretaría
-            <br />y Académico
-          </h2>
-          <p className="mt-4 max-w-md text-lg text-white/80">
-            Registra y matricula estudiantes, consulta fichas académicas y gestiona el estado
-            de los alumnos en un solo lugar.
+    <div
+      className="ac-portal"
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(150deg, #f0fdf4 0%, #f0fdfa 55%, #f7fef9 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '3rem 1rem',
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        style={{ width: '100%', maxWidth: '420px' }}
+      >
+        {/* Cabecera de marca */}
+        <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '4rem',
+              height: '4rem',
+              borderRadius: '1.25rem',
+              background: 'linear-gradient(135deg, #16a34a 0%, #0d9488 100%)',
+              boxShadow: '0 8px 24px rgba(22,163,74,0.35)',
+              marginBottom: '1rem',
+            }}
+          >
+            <i className="ti ti-school" style={{ fontSize: '1.75rem', color: '#fff' }} aria-hidden="true" />
+          </div>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: '#052e16',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            CampusConnect 360
+          </h1>
+          <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: '#6b7280' }}>
+            Portal Secretaría / Académico
           </p>
         </div>
-        <p className="text-sm text-white/60">Universidad · gestión escolar integrada</p>
-      </div>
 
-      {/* Formulario */}
-      <div className="flex items-center justify-center bg-panel px-6 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full max-w-sm"
+        {/* Card del formulario */}
+        <div
+          className="ac-card"
+          style={{ padding: '2rem', background: 'rgba(255,255,255,0.92)' }}
         >
-          <div className="mb-6 flex items-center gap-3 lg:hidden">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-vino">
-              <i className="ti ti-school text-2xl text-oro-soft" aria-hidden="true" />
-            </span>
+          <h2
+            style={{
+              margin: '0 0 0.25rem',
+              fontSize: '1.2rem',
+              fontWeight: 600,
+              color: '#052e16',
+            }}
+          >
+            Iniciar sesión
+          </h2>
+          {/* Divider verde → teal */}
+          <div className="ac-divider" />
+
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {/* Usuario */}
             <div>
-              <p className="font-display text-lg text-ink">CampusConnect 360</p>
-              <p className="text-sm text-muted">Portal Secretaría / Académico</p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-line bg-white p-8 shadow-card">
-            <h1 className="font-display text-2xl text-ink">Iniciar sesión</h1>
-            <div className="mt-3 mb-6 h-[3px] w-12 rounded-full bg-oro" />
-
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-              <Field label="Usuario" error={errors.username?.message}>
-                <input
-                  {...register('username')}
-                  className={controlClass}
-                  placeholder="secretaria1"
-                  autoComplete="username"
-                />
-              </Field>
-              <Field label="Contraseña" error={errors.password?.message}>
-                <input
-                  {...register('password')}
-                  type="password"
-                  className={controlClass}
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                />
-              </Field>
-
-              {error && (
-                <p className="rounded-xl bg-absent-bg px-4 py-3 text-base text-absent-ink">{error}</p>
+              <label
+                htmlFor="login-username"
+                style={{ display: 'block', marginBottom: '0.375rem', fontSize: '0.875rem', fontWeight: 500, color: '#374151' }}
+              >
+                Usuario
+              </label>
+              <input
+                id="login-username"
+                {...register('username')}
+                className="ac-input"
+                placeholder="secretaria1"
+                autoComplete="username"
+              />
+              {errors.username && (
+                <p style={{ marginTop: '0.25rem', fontSize: '0.78rem', color: '#dc2626' }}>
+                  {errors.username.message}
+                </p>
               )}
+            </div>
 
-              <Button type="submit" variant="primary" disabled={isSubmitting} className="w-full">
-                {isSubmitting ? 'Ingresando…' : 'Ingresar'}
-              </Button>
-            </form>
-          </div>
+            {/* Contraseña */}
+            <div>
+              <label
+                htmlFor="login-password"
+                style={{ display: 'block', marginBottom: '0.375rem', fontSize: '0.875rem', fontWeight: 500, color: '#374151' }}
+              >
+                Contraseña
+              </label>
+              <input
+                id="login-password"
+                {...register('password')}
+                type="password"
+                className="ac-input"
+                placeholder="••••••••"
+                autoComplete="current-password"
+              />
+              {errors.password && (
+                <p style={{ marginTop: '0.25rem', fontSize: '0.78rem', color: '#dc2626' }}>
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
-          <p className="mt-5 text-center text-sm text-muted">
-            Usuario de prueba: secretaria1 / Admin1234!
-          </p>
-        </motion.div>
-      </div>
+            {/* Error del servidor */}
+            {error && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.625rem',
+                  padding: '0.75rem 1rem',
+                  borderRadius: '0.75rem',
+                  background: '#fee2e2',
+                  color: '#b91c1c',
+                  fontSize: '0.875rem',
+                }}
+              >
+                <i className="ti ti-alert-circle" style={{ fontSize: '1rem' }} aria-hidden="true" />
+                {error}
+              </div>
+            )}
+
+            {/* Botón submit */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="ac-btn-primary"
+              style={{ width: '100%', marginTop: '0.25rem' }}
+            >
+              {isSubmitting ? (
+                <>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '1rem',
+                      height: '1rem',
+                      border: '2px solid rgba(255,255,255,0.3)',
+                      borderTopColor: '#fff',
+                      borderRadius: '50%',
+                      animation: 'spin 0.7s linear infinite',
+                    }}
+                    aria-hidden="true"
+                  />
+                  Ingresando…
+                </>
+              ) : (
+                <>
+                  <i className="ti ti-lock-open" style={{ fontSize: '1rem' }} aria-hidden="true" />
+                  Ingresar
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+
+        {/* Hint credenciales */}
+        <p style={{ marginTop: '1.25rem', textAlign: 'center', fontSize: '0.75rem', color: '#9ca3af' }}>
+          Usuario de prueba:{' '}
+          <code
+            style={{
+              padding: '0.125rem 0.4rem',
+              borderRadius: '0.375rem',
+              background: '#f0fdf4',
+              color: '#16a34a',
+              fontFamily: 'monospace',
+              fontSize: '0.75rem',
+            }}
+          >
+            secretaria1 / Admin1234!
+          </code>
+        </p>
+      </motion.div>
+
+      {/* Keyframe para el spinner */}
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   )
 }

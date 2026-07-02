@@ -4,7 +4,7 @@ import { AcademicoNavTabs } from '@/shared/layout/AcademicoNavTabs'
 
 export function AcademicoShell() {
   return (
-    <div className="min-h-screen bg-panel">
+    <div className="ac-portal ac-page-bg">
       <AcademicoTopBar />
       <AcademicoNavTabs />
       <main className="mx-auto max-w-6xl px-6 py-8">
