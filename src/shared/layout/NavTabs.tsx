@@ -1,13 +1,9 @@
 import { NavLink } from 'react-router-dom'
-import { useAuth } from '@/shared/auth/useAuth'
 
 export function NavTabs() {
-  const { user } = useAuth()
-
   const tabs = [
-    ...(user?.role === 'Secretaria'
-      ? [{ to: '/', label: 'Registrar', icon: 'ti-file-plus', end: true }]
-      : []),
+    { to: '/', label: 'Obligaciones', icon: 'ti-receipt', end: true },
+    { to: '/pagos', label: 'Registrar pago', icon: 'ti-currency-dollar', end: false },
     { to: '/estudiantes', label: 'Estudiantes', icon: 'ti-users', end: false },
   ]
 

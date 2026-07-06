@@ -66,11 +66,11 @@ export function AttendancePage() {
         notify('success', `Asistencia guardada: ${total} registro(s).`)
         setMarks({})
       } else {
-        notify('error', `${failed} de ${total} registros fallaron. Reintenta los pendientes.`)
+        notify('error', `${failed} de ${total} registros fallaron.`)
       }
     },
     onError: (e) =>
-      notify('error', e instanceof ApiError ? e.message : 'No se pudo guardar la asistencia.'),
+      notify('error', e instanceof ApiError ? e.message : 'Error al guardar.'),
   })
 
   if (isLoading) {
@@ -88,8 +88,8 @@ export function AttendancePage() {
         <PageHeader title="Asistencia del día" />
         <EmptyState
           icon="ti-alert-triangle"
-          title="No se pudieron cargar los estudiantes"
-          message="Revisa que el Gateway esté arriba."
+          title="Error de conexión"
+          message="No se pudieron cargar los datos."
           action={<Button onClick={() => refetch()}>Reintentar</Button>}
         />
       </>
@@ -120,9 +120,7 @@ export function AttendancePage() {
         >
           <option value="">Grado: Todos</option>
           {grades.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
+            <option key={g} value={g}>{g}</option>
           ))}
         </select>
       </div>
@@ -130,8 +128,8 @@ export function AttendancePage() {
       {filtered.length === 0 ? (
         <EmptyState
           icon="ti-users"
-          title="No hay estudiantes para mostrar"
-          message="La lista se llena cuando Secretaría matricula estudiantes (evento StudentEnrolled). Si recién empiezas, pídeles que registren alumnos."
+          title="No hay estudiantes"
+          message="No se encontraron registros para mostrar."
         />
       ) : (
         <Card className="overflow-hidden">
@@ -139,11 +137,7 @@ export function AttendancePage() {
             <span>Estudiante</span>
             <span>Estado</span>
           </div>
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={{ show: { transition: { staggerChildren: 0.035 } } }}
-          >
+          <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.035 } } }}>
             {filtered.map((s) => (
               <motion.div key={s.studentId} variants={rowVariants}>
                 <AttendanceRow
@@ -164,24 +158,20 @@ export function AttendancePage() {
           onClick={() => save.mutate()}
         >
           <i className="ti ti-device-floppy text-lg" aria-hidden="true" />
-          {save.isPending ? 'Guardando…' : `Guardar asistencia${markedCount ? ` (${markedCount})` : ''}`}
+          {save.isPending ? 'Guardando…' : `Guardar (${markedCount})`}
         </Button>
       </div>
     </Reveal>
   )
 }
 
-function AttendanceRow({
-  student,
-  value,
-  onChange,
-}: {
-  student: StudentReplica
-  value: AttendanceStatus | null
-  onChange: (value: AttendanceStatus) => void
+function AttendanceRow({ student, value, onChange }: { 
+  student: StudentReplica, 
+  value: AttendanceStatus | null, 
+  onChange: (v: AttendanceStatus) => void 
 }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4 transition-colors last:border-b-0 hover:bg-panel/60">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4 transition-colors hover:bg-panel/60">
       <div className="flex items-center gap-3">
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-vino-soft text-base font-medium text-vino">
           {initials(student.fullName)}

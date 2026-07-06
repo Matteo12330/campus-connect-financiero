@@ -13,10 +13,14 @@ export function TopBar() {
     navigate('/')
   }
 
+  const portalLabel = 'Portal Financiero / Pagos'
+  const iconClass = 'ti-wallet'
+  const iconColor = '#fcd34d'
+
   return (
     <header
       style={{
-        background: 'linear-gradient(110deg, #064e3b 0%, #065f46 45%, #0d9488 100%)',
+        background: 'linear-gradient(110deg, #0f766e 0%, #047857 45%, #10b981 100%)',
         borderBottom: '1px solid rgba(110,231,183,0.2)',
       }}
       className="text-white"
@@ -28,12 +32,12 @@ export function TopBar() {
             className="flex h-10 w-10 items-center justify-center rounded-xl"
             style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(6px)' }}
           >
-            <i className="ti ti-school text-xl" style={{ color: '#6ee7b7' }} aria-hidden="true" />
+            <i className={`ti ${iconClass} text-xl`} style={{ color: iconColor }} aria-hidden="true" />
           </span>
           <div className="leading-tight">
             <p className="text-base font-semibold tracking-tight">CampusConnect 360</p>
             <p className="text-xs" style={{ color: 'rgba(110,231,183,0.9)' }}>
-              Portal Secretaría / Académico
+              {portalLabel}
             </p>
           </div>
         </div>

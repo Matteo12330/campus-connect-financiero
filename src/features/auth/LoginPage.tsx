@@ -56,11 +56,11 @@ export function LoginPage() {
         <div>
           <div className="mb-4 h-1 w-16 rounded-full bg-oro" />
           <h2 className="font-display text-4xl leading-tight">
-            Portal Académico
-            <br />y Secretaría
+            Portal Financiero
+            <br />y Pagos
           </h2>
           <p className="mt-4 max-w-md text-lg text-white/80">
-            Gestiona matrícula, consulta estudiantes y trabaja con el historial académico desde
+            Gestiona obligaciones, confirma pagos y administra estudiantes financieros desde
             una sola interfaz.
           </p>
         </div>
@@ -76,11 +76,11 @@ export function LoginPage() {
         >
           <div className="mb-6 flex items-center gap-3 lg:hidden">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-vino">
-              <i className="ti ti-school text-2xl text-oro-soft" aria-hidden="true" />
+              <i className="ti ti-wallet text-2xl text-oro-soft" aria-hidden="true" />
             </span>
             <div>
               <p className="font-display text-lg text-ink">CampusConnect 360</p>
-              <p className="text-sm text-muted">Portal Académico / Secretaría</p>
+              <p className="text-sm text-muted">Portal Financiero / Pagos</p>
             </div>
           </div>
 
@@ -100,7 +100,7 @@ export function LoginPage() {
                   id="login-username"
                   {...register('username')}
                   className="w-full rounded-xl border border-line bg-white px-4 py-3 text-base text-ink outline-none transition focus:border-vino"
-                  placeholder="secretaria1"
+                  placeholder="finanzas1"
                   autoComplete="username"
                 />
                 {errors.username && (
@@ -143,7 +143,7 @@ export function LoginPage() {
           </div>
 
           <p className="mt-5 text-center text-sm text-muted">
-            Usuario de prueba: secretaria1 / Admin1234!
+            Usuario de prueba: finanzas1 / Admin1234!
           </p>
         </motion.div>
       </div>

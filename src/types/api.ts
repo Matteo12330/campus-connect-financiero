@@ -26,6 +26,16 @@ export interface StudentReplica {
   lastUpdatedAt: string
 }
 
+export interface StudentReplicaItemDto {
+  studentId: string
+  fullName: string
+  grade: string
+  schoolId: string
+  lastUpdatedAt: string
+  academicStatus: string
+  financialStatus: string
+}
+
 export type AttendanceStatus = 'Present' | 'Absent' | 'Late'
 
 export interface AttendanceRecordDto {
@@ -107,6 +117,24 @@ export interface StudentStatusDto {
   financialStatus: string
 }
 
+export interface PaymentRecordDto {
+  paymentId: string
+  studentId: string
+  paymentType: string
+  description: string
+  amount: number
+  paymentDate: string
+  status: 'Pending' | 'Confirmed' | 'Paid' | 'Overdue'
+  createdAt: string
+  confirmedAt?: string
+}
+
+export interface PaymentConfirmationResponse {
+  paymentId: string
+  status: 'Confirmed' | 'Paid'
+  confirmedAt: string
+}
+
 export interface StudentEventDto {
   eventType: string
   occurredAt: string
@@ -116,4 +144,11 @@ export interface StudentEventDto {
 export interface PagedList<T> {
   items: T[]
   total: number
+}
+
+export interface PaginatedResponse<T> {
+  items: T[]
+  totalCount: number
+  page: number
+  pageSize: number
 }

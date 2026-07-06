@@ -1,13 +1,13 @@
-# CampusConnect 360 — Frontend (Portal Académico / Secretaría)
+# CampusConnect 360 — Frontend (Portal Financiero / Pagos)
 
-Este repositorio contiene únicamente el portal Académico / Secretaría. El backend vive en
+Este repositorio contiene únicamente el portal Financiero / Pagos. El backend vive en
 otro repo y no se modifica desde aquí. La base visual y técnica ya está consolidada en este
 frontend, así que reutiliza `src/shared/` en lugar de duplicar componentes.
 
 ## Qué es este repo
 
-Frontend del Portal Académico / Secretaría. Permite matrícula, listado y ficha de
-estudiantes, junto con la infraestructura compartida de auth, layout y cliente HTTP.
+Frontend del Portal Financiero / Pagos. Gestiona obligaciones, consultas de estado y pagos
+estudiantiles, junto con la infraestructura compartida de auth, layout y cliente HTTP.
 
 ## Stack
 
@@ -47,7 +47,7 @@ src/
 │  ├─ auth/    AuthContext, useAuth, RoleGuard, authStorage
 │  ├─ lib/     utilidades (initials, today)
 │  └─ styles/  tokens.css
-├─ features/   módulos del portal Académico / Secretaría
+├─ features/   módulos del portal Financiero / Pagos
 └─ types/      contratos del backend (DTOs)
 ```
 

@@ -1,11 +1,10 @@
-# CampusConnect 360 — Portal Académico / Secretaría
+# CampusConnect 360 — Portal Financiero / Pagos
 
-Frontend del **Portal Académico / Secretaría** de CampusConnect 360. Permite matricular
-estudiantes, consultar el listado y ver la ficha e historial académico desde una sola
-interfaz. Consume el backend de microservicios (.NET) a través del **API Gateway**.
+Frontend del **Portal Financiero / Pagos** de CampusConnect 360. Gestiona obligaciones,
+consultas de estado y pagos de estudiantes a través del **API Gateway**.
 
-> Repositorio independiente del backend. Este fork sirve solo el portal Académico /
-> Secretaría; los demás frontends viven en sus propios repositorios y despliegues.
+> Repositorio independiente del backend. Este fork sirve solo el portal Financiero; los
+demás frontends viven en sus propios repositorios y despliegues.
 
 ## Stack
 
@@ -50,16 +49,16 @@ Abre http://localhost:5173.
 
 | Usuario      | Contraseña  | Rol        |
 | ------------ | ----------- | ---------- |
-| secretaria1  | Admin1234!  | Secretaria |
+| finanzas1    | Admin1234!  | Finanzas  |
 
-> El portal exige rol **Secretaria** o **Direccion**. Otros roles ven una pantalla de
+> El portal exige rol **Finanzas**. Otros roles ven una pantalla de
 > "sin acceso".
 
 ### Importante: lista de estudiantes
 
-La lista de estudiantes es una **réplica local** que el servicio de Attendance llena al
-consumir el evento `StudentEnrolled` que publica el servicio Académico. Si la lista está
-vacía, es porque todavía **no se matriculó ningún estudiante** desde Secretaría/Academic.
+La lista de estudiantes la expone el servicio de Pagos vía Gateway. Si la lista está
+vacía, revisa que el backend de Pagos esté arriba y que el Gateway tenga las rutas
+`/api/payments/students` y `/api/payments/obligations` correctamente mapeadas.
 
 ## CORS / proxy
 
@@ -89,18 +88,18 @@ src/
 
 ## Endpoints que consume (vía Gateway)
 
-| Acción               | Método y ruta                               | Rol        |
-| -------------------- | ------------------------------------------- | ---------- |
-| Login                | `POST /api/identity/auth/login`             | público    |
-| Refresh token        | `POST /api/identity/auth/refresh`           | público    |
-| Listar estudiantes   | `GET /api/attendance/students`              | Secretaria |
-| Registrar asistencia | `POST /api/attendance/records`              | Secretaria |
-| Reportar incidente   | `POST /api/attendance/incidents`            | Secretaria |
-| Historial estudiante | `GET /api/attendance/students/{id}/history` | Secretaria |
-| Health               | `GET /api/attendance/health`                | público    |
+| Acción                         | Método y ruta                               | Rol        |
+| ------------------------------ | ------------------------------------------- | ---------- |
+| Login                          | `POST /api/identity/auth/login`             | público    |
+| Refresh token                  | `POST /api/identity/auth/refresh`           | público    |
+| Listar estudiantes financieros | `GET /api/payments/students`                | Finanzas   |
+| Registrar obligación de pago   | `POST /api/payments/obligations`            | Finanzas   |
+| Detalle de estudiante          | `GET /api/payments/students/{id}`           | Finanzas   |
+| Estado financiero              | `GET /api/payments/students/{id}/status`    | Finanzas   |
+| Health                         | `GET /api/payments/health`                  | público    |
 
-Registrar asistencia publica el evento `AttendanceRecorded`; reportar incidente publica
-`IncidentReported`. El frontend solo dispara las acciones — la mensajería la maneja el backend.
+Este portal consume el servicio de Pagos y la información financiera de estudiantes
+vía Gateway.
 
 ## Estructura de rutas
 

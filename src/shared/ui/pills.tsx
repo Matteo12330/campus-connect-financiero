@@ -35,6 +35,7 @@ export function AcademicStatusPill({ status }: { status: string }) {
 
 const financialStatusMap: Record<string, { label: string; cls: string }> = {
   Paid: { label: 'Pagado', cls: 'bg-present-bg text-present-ink' },
+  Confirmed: { label: 'Confirmado', cls: 'bg-present-bg text-present-ink' },
   Pending: { label: 'Pendiente', cls: 'bg-late-bg text-late-ink' },
   Overdue: { label: 'Vencido', cls: 'bg-absent-bg text-absent-ink' },
 }

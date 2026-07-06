@@ -6,7 +6,7 @@ export function useHealth(): boolean {
   const { data } = useQuery({
     queryKey: ['health'],
     queryFn: async () => {
-      const res = await fetch('/api/attendance/health')
+      const res = await fetch('/api/payments/health')
       return res.ok
     },
     refetchInterval: 15000,

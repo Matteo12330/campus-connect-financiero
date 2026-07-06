@@ -91,7 +91,7 @@ export function LoginAcademicoPage() {
             CampusConnect 360
           </h1>
           <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: '#6b7280' }}>
-            Portal Secretaría / Académico
+            Portal Financiero / Pagos
           </p>
         </div>
 
@@ -126,7 +126,7 @@ export function LoginAcademicoPage() {
                 id="login-username"
                 {...register('username')}
                 className="ac-input"
-                placeholder="secretaria1"
+                placeholder="finanzas1"
                 autoComplete="username"
               />
               {errors.username && (
@@ -224,7 +224,7 @@ export function LoginAcademicoPage() {
               fontSize: '0.75rem',
             }}
           >
-            secretaria1 / Admin1234!
+            finanzas1 / Admin1234!
           </code>
         </p>
       </motion.div>
