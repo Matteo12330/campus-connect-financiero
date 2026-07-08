@@ -1,5 +1,5 @@
 // Contratos del backend CampusConnect 360 (serialización camelCase de System.Text.Json).
-// Estos tipos reflejan los DTO reales de Identity y Attendance — no inventar campos.
+// Estos tipos reflejan los DTO reales de Identity y Payments — no inventar campos.
 
 export type UserRole = 'Secretaria' | 'Finanzas' | 'Docente' | 'Direccion'
 
@@ -18,13 +18,8 @@ export interface CurrentUser {
   role: UserRole
 }
 
-export interface StudentReplica {
-  studentId: string
-  fullName: string
-  grade: string
-  schoolId: string
-  lastUpdatedAt: string
-}
+// ── Payments: réplica local de estudiantes ──
+// Se llena con los eventos StudentEnrolled / StudentStatusUpdated que publica Academic.
 
 export interface StudentReplicaItemDto {
   studentId: string
@@ -32,113 +27,9 @@ export interface StudentReplicaItemDto {
   grade: string
   schoolId: string
   lastUpdatedAt: string
-  academicStatus: string
-  financialStatus: string
-}
-
-export type AttendanceStatus = 'Present' | 'Absent' | 'Late'
-
-export interface AttendanceRecordDto {
-  recordId: string
-  studentId: string
-  date: string
-  status: AttendanceStatus
-}
-
-export type IncidentSeverity = 'Low' | 'Medium' | 'High'
-
-export interface IncidentSummary {
-  incidentId: string
-  studentId: string
-  type: string
-  severity: IncidentSeverity
-}
-
-export interface StudentHistory {
-  attendance: AttendanceRecordDto[]
-  incidents: IncidentSummary[]
-}
-
-export interface RecordAttendanceResponse {
-  recordId: string
-  status: string
-}
-
-export interface ReportIncidentResponse {
-  incidentId: string
-  severity: string
-}
-
-// ── Academic (Portal Secretaría / Académico) ──
-
-export interface StudentListItemDto {
-  studentId: string
-  fullName: string
-  grade: string
-  academicStatus: string
-  financialStatus: string
-}
-
-export interface StudentDetailDto {
-  studentId: string
-  fullName: string
-  documentId: string
-  grade: string
-  schoolId: string
-  academicStatus: string
-  financialStatus: string
-  guardian: GuardianDto
-}
-
-export interface GuardianDto {
-  name: string
-  email: string
-}
-
-export interface EnrollStudentRequest {
-  fullName: string
-  documentId: string
-  grade: string
-  schoolId?: string
-  guardianName: string
-  guardianEmail: string
-}
-
-export interface EnrollStudentResponse {
-  studentId: string
-  enrollmentId: string
-  status: string
-}
-
-export interface StudentStatusDto {
-  studentId: string
-  exists: boolean
-  academicStatus: string
-  financialStatus: string
-}
-
-export interface PaymentRecordDto {
-  paymentId: string
-  studentId: string
-  paymentType: string
-  description: string
-  amount: number
-  paymentDate: string
-  status: 'Pending' | 'Confirmed' | 'Paid' | 'Overdue'
-  createdAt: string
-  confirmedAt?: string
-}
-
-export interface PaymentConfirmationResponse {
-  paymentId: string
-  status: 'Confirmed' | 'Paid'
-  confirmedAt: string
-}
-
-export interface StudentEventDto {
-  eventType: string
-  occurredAt: string
-  correlationId: string
+  // Pueden venir null en réplicas creadas antes de la fase 3 del backend.
+  academicStatus: string | null
+  financialStatus: string | null
 }
 
 export interface PagedList<T> {
@@ -146,9 +37,59 @@ export interface PagedList<T> {
   total: number
 }
 
-export interface PaginatedResponse<T> {
-  items: T[]
-  totalCount: number
-  page: number
-  pageSize: number
+// ── Payments: obligaciones de pago ──
+// Flujo: se registra una obligación (Pending) y luego se confirma el pago,
+// lo que publica el evento PaymentConfirmed vía outbox.
+
+export type ObligationStatus = 'Pending' | 'Confirmed'
+
+export interface ObligationListItemDto {
+  obligationId: string
+  studentId: string
+  concept: string
+  amount: number
+  dueDate: string
+  status: ObligationStatus
+}
+
+export interface PaymentDto {
+  paymentId: string
+  method: string
+  reference: string
+  confirmedAt: string
+}
+
+export interface ObligationDetailDto {
+  obligationId: string
+  studentId: string
+  concept: string
+  amount: number
+  dueDate: string
+  schoolId: string
+  status: ObligationStatus
+  payment: PaymentDto | null
+}
+
+export interface RegisterObligationRequest {
+  studentId: string
+  concept: string
+  amount: number
+  dueDate: string
+}
+
+export interface RegisterObligationResponse {
+  obligationId: string
+  status: string
+}
+
+export interface ConfirmPaymentRequest {
+  method: string
+  reference: string
+}
+
+export interface ConfirmPaymentResponse {
+  obligationId: string
+  status: string
+  paymentId: string
+  confirmedAt: string
 }

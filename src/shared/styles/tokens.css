@@ -29,31 +29,10 @@
 
   --shadow-card: 0 1px 2px rgba(28, 34, 48, 0.05), 0 10px 26px -14px rgba(28, 34, 48, 0.16);
   --shadow-pop: 0 18px 40px -12px rgba(28, 34, 48, 0.28);
-
-  /* ── Portal Académico / Secretaría — paleta verde esmeralda + teal ── */
-  --color-ac-primary:       #16a34a;   /* green-600   */
-  --color-ac-primary-dark:  #14532d;   /* green-900   */
-  --color-ac-primary-light: #4ade80;   /* green-400   */
-  --color-ac-primary-soft:  #f0fdf4;   /* green-50    */
-  --color-ac-accent:        #0d9488;   /* teal-600    */
-  --color-ac-accent-soft:   #f0fdfa;   /* teal-50     */
-  --color-ac-surface:       #f7fef9;
-  --color-ac-card:          #ffffff;
-  --color-ac-border:        #bbf7d0;   /* green-200   */
-  --color-ac-muted:         #6b7280;
-  --color-ac-ink:           #111827;
-
-  --shadow-ac-card:
-    0 1px 3px rgba(22, 163, 74, 0.06),
-    0 8px 24px -8px rgba(22, 163, 74, 0.14);
-  --shadow-ac-card-hover:
-    0 4px 6px rgba(22, 163, 74, 0.08),
-    0 20px 40px -12px rgba(22, 163, 74, 0.22);
-  --shadow-ac-pop:
-    0 20px 50px -10px rgba(22, 163, 74, 0.35);
 }
 
 @layer base {
+  /* Escala base más grande: todo el UI (que usa rem) crece de forma proporcional. */
   html {
     font-size: 18px;
     font-family: var(--font-sans);
@@ -92,217 +71,36 @@
 .rdp-day_button:hover {
   background: var(--color-panel);
 }
+
+/* Calendario grande para el historial */
 .cal-lg .rdp-root {
   --rdp-day-width: 3rem;
   --rdp-day-height: 3rem;
   --rdp-day_button-width: 3rem;
   --rdp-day_button-height: 3rem;
 }
-.cal-lg .rdp-month_caption { font-size: 1.25rem; }
-
-.rdp-day.day-present .rdp-day_button { background: var(--color-present-bg); color: var(--color-present-ink); font-weight: 500; }
-.rdp-day.day-absent  .rdp-day_button { background: var(--color-absent-bg);  color: var(--color-absent-ink);  font-weight: 500; }
-.rdp-day.day-late    .rdp-day_button { background: var(--color-late-bg);     color: var(--color-late-ink);    font-weight: 500; }
-.rdp-day.rdp-selected .rdp-day_button { box-shadow: 0 0 0 2px var(--color-vino); color: var(--color-vino); }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   Portal Académico — design system verde esmeralda / teal
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Fondo página académica: gradiente suave verde */
-.ac-page-bg {
-  background: linear-gradient(150deg, #f0fdf4 0%, #f0fdfa 55%, #f7fef9 100%);
-  min-height: 100vh;
+.cal-lg .rdp-month_caption {
+  font-size: 1.25rem;
 }
 
-/* Card glassmorfismo */
-.ac-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(187, 247, 208, 0.85);
-  border-radius: 1.25rem;
-  box-shadow: var(--shadow-ac-card);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
-}
-.ac-card-interactive {
-  transition: box-shadow 0.25s ease, transform 0.22s ease;
-}
-.ac-card-interactive:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-ac-card-hover);
-}
-
-/* Input académico */
-.ac-input {
-  height: 2.75rem;
-  width: 100%;
-  border-radius: 0.875rem;
-  border: 1.5px solid var(--color-ac-border);
-  background: #fff;
-  padding: 0 1rem;
-  font-size: 0.95rem;
-  color: var(--color-ac-ink);
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.ac-input:focus {
-  border-color: var(--color-ac-primary);
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
-}
-.ac-input::placeholder { color: #9ca3af; }
-
-/* Botón primario — verde esmeralda → teal */
-.ac-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 2.75rem;
-  padding: 0 1.5rem;
-  border-radius: 0.875rem;
-  background: linear-gradient(135deg, #16a34a 0%, #0d9488 100%);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
-}
-.ac-btn-primary:hover:not(:disabled) {
-  opacity: 0.92;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
-}
-.ac-btn-primary:active:not(:disabled) { transform: translateY(0); }
-.ac-btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-
-/* Botón secundario */
-.ac-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 2.75rem;
-  padding: 0 1.25rem;
-  border-radius: 0.875rem;
-  background: #fff;
-  color: var(--color-ac-primary);
+/* Días marcados por estado de asistencia */
+.rdp-day.day-present .rdp-day_button {
+  background: var(--color-present-bg);
+  color: var(--color-present-ink);
   font-weight: 500;
-  font-size: 0.9rem;
-  border: 1.5px solid var(--color-ac-border);
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, transform 0.15s;
 }
-.ac-btn-secondary:hover:not(:disabled) {
-  background: var(--color-ac-primary-soft);
-  border-color: var(--color-ac-primary-light);
-}
-.ac-btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-/* Botón ghost */
-.ac-btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 2.75rem;
-  padding: 0 1rem;
-  border-radius: 0.875rem;
-  background: transparent;
-  color: var(--color-ac-muted);
+.rdp-day.day-absent .rdp-day_button {
+  background: var(--color-absent-bg);
+  color: var(--color-absent-ink);
   font-weight: 500;
-  font-size: 0.9rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.18s, color 0.18s;
 }
-.ac-btn-ghost:hover:not(:disabled) {
-  background: var(--color-ac-primary-soft);
-  color: var(--color-ac-primary);
+.rdp-day.day-late .rdp-day_button {
+  background: var(--color-late-bg);
+  color: var(--color-late-ink);
+  font-weight: 500;
 }
-
-/* Animaciones de entrada */
-@keyframes ac-fade-up {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.ac-animate-up   { animation: ac-fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.ac-animate-up-1 { animation: ac-fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both; }
-.ac-animate-up-2 { animation: ac-fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both; }
-.ac-animate-up-3 { animation: ac-fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both; }
-.ac-animate-up-4 { animation: ac-fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both; }
-
-/* Divider decorativo verde → teal */
-.ac-divider {
-  height: 3px;
-  width: 3rem;
-  border-radius: 99px;
-  background: linear-gradient(90deg, #16a34a, #0d9488);
-  margin: 0.5rem 0 1.25rem;
-}
-
-/* Dot pulsante */
-@keyframes ac-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.6; transform: scale(0.85); }
-}
-.ac-pulse { animation: ac-pulse 2.2s ease-in-out infinite; }
-
-/* Avatar círculo */
-.ac-avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #bbf7d0 0%, #99f6e4 100%);
-  color: var(--color-ac-primary);
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-/* Row tabla */
-.ac-table-row {
-  display: grid;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.9rem 1.25rem;
-  border-bottom: 1px solid rgba(187, 247, 208, 0.7);
-  cursor: pointer;
-  transition: background 0.16s;
-  text-align: left;
-  width: 100%;
-  background: transparent;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-}
-.ac-table-row:last-child { border-bottom: none; }
-.ac-table-row:hover { background: rgba(240, 253, 244, 0.8); }
-
-/* Status tags académicos */
-.ac-status-active    { background: #dcfce7; color: #15803d; }
-.ac-status-suspended { background: #fef9c3; color: #a16207; }
-.ac-status-graduated { background: #dbeafe; color: #1d4ed8; }
-.ac-status-paid      { background: #dcfce7; color: #15803d; }
-.ac-status-pending   { background: #fef9c3; color: #a16207; }
-.ac-status-overdue   { background: #fee2e2; color: #dc2626; }
-
-/* Badge base */
-.ac-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.2rem 0.7rem;
-  border-radius: 99px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
-
-/* Focus académico */
-.ac-portal *:focus-visible {
-  outline: 2px solid var(--color-ac-primary);
-  outline-offset: 2px;
+/* Día seleccionado: anillo vino visible por encima del color de estado */
+.rdp-day.rdp-selected .rdp-day_button {
+  box-shadow: 0 0 0 2px var(--color-vino);
+  color: var(--color-vino);
 }

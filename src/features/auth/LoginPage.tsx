@@ -5,6 +5,9 @@ import { z } from 'zod'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useAuth } from '@/shared/auth/useAuth'
+import { Button } from '@/shared/ui/Button'
+import { Field } from '@/shared/ui/Field'
+import { controlClass } from '@/shared/ui/styles'
 import { ApiError } from '@/shared/api/httpClient'
 
 const schema = z.object({
@@ -46,6 +49,7 @@ export function LoginPage() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
+      {/* Panel de marca */}
       <div className="relative hidden flex-col justify-between overflow-hidden bg-[linear-gradient(135deg,#7a1b2e_0%,#5e1422_55%,#4e0f1c_100%)] p-12 text-white lg:flex">
         <div className="flex items-center gap-3">
           <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/12">
@@ -60,13 +64,14 @@ export function LoginPage() {
             <br />y Pagos
           </h2>
           <p className="mt-4 max-w-md text-lg text-white/80">
-            Gestiona obligaciones, confirma pagos y administra estudiantes financieros desde
-            una sola interfaz.
+            Registra obligaciones de pago, confirma cobros y consulta el estado financiero de los
+            estudiantes en un solo lugar.
           </p>
         </div>
         <p className="text-sm text-white/60">Universidad · gestión escolar integrada</p>
       </div>
 
+      {/* Formulario */}
       <div className="flex items-center justify-center bg-panel px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -89,56 +94,31 @@ export function LoginPage() {
             <div className="mt-3 mb-6 h-[3px] w-12 rounded-full bg-oro" />
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-              <div>
-                <label
-                  htmlFor="login-username"
-                  className="mb-1.5 block text-sm font-medium text-ink"
-                >
-                  Usuario
-                </label>
+              <Field label="Usuario" error={errors.username?.message}>
                 <input
-                  id="login-username"
                   {...register('username')}
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 text-base text-ink outline-none transition focus:border-vino"
+                  className={controlClass}
                   placeholder="finanzas1"
                   autoComplete="username"
                 />
-                {errors.username && (
-                  <p className="mt-1 text-sm text-red-600">{errors.username.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="login-password"
-                  className="mb-1.5 block text-sm font-medium text-ink"
-                >
-                  Contraseña
-                </label>
+              </Field>
+              <Field label="Contraseña" error={errors.password?.message}>
                 <input
-                  id="login-password"
                   {...register('password')}
                   type="password"
-                  className="w-full rounded-xl border border-line bg-white px-4 py-3 text-base text-ink outline-none transition focus:border-vino"
+                  className={controlClass}
                   placeholder="••••••••"
                   autoComplete="current-password"
                 />
-                {errors.password && (
-                  <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-                )}
-              </div>
+              </Field>
 
               {error && (
                 <p className="rounded-xl bg-absent-bg px-4 py-3 text-base text-absent-ink">{error}</p>
               )}
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full rounded-xl bg-vino px-4 py-3 text-base font-semibold text-white transition hover:bg-vino-dark disabled:cursor-not-allowed disabled:opacity-70"
-              >
+              <Button type="submit" variant="primary" disabled={isSubmitting} className="w-full">
                 {isSubmitting ? 'Ingresando…' : 'Ingresar'}
-              </button>
+              </Button>
             </form>
           </div>
 

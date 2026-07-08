@@ -8,3 +8,7 @@ export function initials(name: string): string {
 export function today(): string {
   return new Date().toISOString().slice(0, 10)
 }
+
+export function formatMoney(value: number): string {
+  return new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' }).format(value)
+}
